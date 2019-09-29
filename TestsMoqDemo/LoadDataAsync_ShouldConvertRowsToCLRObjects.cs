@@ -1,21 +1,13 @@
-using Autofac.Extras.Moq;
+﻿using Autofac.Extras.Moq;
 using MoqDemoPractice;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 using Xunit;
 
 namespace TestsMoqDemo
 {
-    public class MyIntStringClass
-    {
-        public string Value { get; set; }
-        public int Boolean { get; set; }
-    }
-
-    public class UnitTest1
+    public partial class LoadDataAsyncTests
     {
         [Fact]
         public void LoadDataAsync_ShouldConvertRowsToCLRObjects()
@@ -39,21 +31,6 @@ namespace TestsMoqDemo
                     Assert.Equal(expected[i].Age, actual[i].Age);
                     Assert.Equal(expected[i].Name, actual[i].Name);
                 }
-            }
-        }
-
-        [Fact]
-        public async Task LoadDataAsync_ThrowsException_IfClassPropertiesDontCorrespondToRow()
-        {
-            using (var mock = AutoMock.GetLoose())
-            {
-                mock.Mock<ITxtFileReader>()
-                    .Setup(reader => reader.ReadAllLinesAsync())
-                    .Returns(GetSampleRowsAsync());
-
-                var accessor = mock.Create<TxtFileDataAccess>();
-
-                await Assert.ThrowsAsync<InvalidOperationException>(() => accessor.LoadDataAsync<MyIntStringClass>());
             }
         }
 
@@ -83,7 +60,6 @@ namespace TestsMoqDemo
                 }
             };
         }
-
         private string[] GetSampleRows()
         {
             var users = GetSampleUsers();
@@ -92,7 +68,6 @@ namespace TestsMoqDemo
 
             return rows.ToArray();
         }
-
         private Task<string[]> GetSampleRowsAsync()
         {
             var rows = GetSampleRows();
