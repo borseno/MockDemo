@@ -40,7 +40,9 @@ namespace MoqDemoPractice
 
                 if (!match.Success)
                 {
-                    throw new InvalidDataException(name);
+                    throw new InvalidOperationException(
+                        "Invalid class for data, the following property couldn't be found in a row: " 
+                        + name);
                 }
 
                 var leftBorderOfValueLength = name.Length + 1;
