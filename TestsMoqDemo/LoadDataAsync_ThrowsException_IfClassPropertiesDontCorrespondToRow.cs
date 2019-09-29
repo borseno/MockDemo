@@ -8,7 +8,7 @@ namespace TestsMoqDemo
 {
     public partial class LoadDataAsyncTests
     {
-        public class MyIntStringClass
+        private class MyIntStringClass
         {
             public string Value { get; set; }
             public int Boolean { get; set; }
