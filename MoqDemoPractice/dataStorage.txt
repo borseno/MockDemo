@@ -1,0 +1,3 @@
+﻿Name=Martin;Age=45;
+Name=Yevgeniy;Age=32;
+Name=Ludvig;Age=20;
