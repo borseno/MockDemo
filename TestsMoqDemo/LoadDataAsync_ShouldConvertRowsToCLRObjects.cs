@@ -1,21 +1,14 @@
-using Autofac.Extras.Moq;
-using MoqDemoPractice;
-using System;
+﻿using Autofac.Extras.Moq;
+using SharedModels;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
+using TxtFileDataAccess;
 using Xunit;
 
 namespace TestsMoqDemo
 {
-    public class MyIntStringClass
-    {
-        public string Value { get; set; }
-        public int Boolean { get; set; }
-    }
-
-    public class UnitTest1
+    public partial class LoadDataAsyncTests
     {
         [Fact]
         public void LoadDataAsync_ShouldConvertRowsToCLRObjects()
@@ -26,10 +19,10 @@ namespace TestsMoqDemo
                     .Setup(reader => reader.ReadAllLinesAsync())
                     .Returns(GetSampleRowsAsync());
 
-                var accessor = mock.Create<TxtFileDataAccess>();
+                var accessor = mock.Create<TxtFileDataAccess<User>>();
 
                 var expected = GetSampleUsers();
-                var actual = accessor.LoadDataAsync<User>().GetAwaiter().GetResult().ToList();
+                var actual = accessor.LoadDataAsync().GetAwaiter().GetResult().ToList();
 
                 Assert.True(actual != null);
                 Assert.Equal(expected.Count, actual.Count);
@@ -39,21 +32,6 @@ namespace TestsMoqDemo
                     Assert.Equal(expected[i].Age, actual[i].Age);
                     Assert.Equal(expected[i].Name, actual[i].Name);
                 }
-            }
-        }
-
-        [Fact]
-        public async Task LoadDataAsync_ThrowsException_IfClassPropertiesDontCorrespondToRow()
-        {
-            using (var mock = AutoMock.GetLoose())
-            {
-                mock.Mock<ITxtFileReader>()
-                    .Setup(reader => reader.ReadAllLinesAsync())
-                    .Returns(GetSampleRowsAsync());
-
-                var accessor = mock.Create<TxtFileDataAccess>();
-
-                await Assert.ThrowsAsync<InvalidOperationException>(() => accessor.LoadDataAsync<MyIntStringClass>());
             }
         }
 
@@ -83,8 +61,7 @@ namespace TestsMoqDemo
                 }
             };
         }
-
-        private string[] GetSampleRows()
+        private IEnumerable<string> GetSampleRows()
         {
             var users = GetSampleUsers();
 
@@ -92,8 +69,7 @@ namespace TestsMoqDemo
 
             return rows.ToArray();
         }
-
-        private Task<string[]> GetSampleRowsAsync()
+        private Task<IEnumerable<string>> GetSampleRowsAsync()
         {
             var rows = GetSampleRows();
 

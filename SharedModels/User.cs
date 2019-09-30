@@ -1,4 +1,4 @@
-﻿namespace MoqDemoPractice
+﻿namespace SharedModels
 {
     public class User
     {
