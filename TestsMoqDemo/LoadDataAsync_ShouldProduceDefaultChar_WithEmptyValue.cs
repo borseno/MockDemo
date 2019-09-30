@@ -16,7 +16,7 @@ namespace TestsMoqDemo
         }
 
         [Fact]
-        public async Task LoadDataAsync_ShouldProduceDefaultChat_WithEmptyValue()
+        public async Task LoadDataAsync_ShouldProduceDefaultChar_WithEmptyValue()
         {
             // Arrange
             ICollection<SampleClassWithTwoChars> expected = new List<SampleClassWithTwoChars>
