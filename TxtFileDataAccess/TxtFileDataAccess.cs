@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace MoqDemoPractice
+namespace TxtFileDataAccess
 {
     public class TxtFileDataAccess<T>
     {
@@ -41,7 +41,7 @@ namespace MoqDemoPractice
                 if (!match.Success)
                 {
                     throw new InvalidOperationException(
-                        "Invalid class for data, the following property couldn't be found in a row: " 
+                        "Invalid class for data, the following property couldn't be found in a row: "
                         + name);
                 }
 
@@ -52,7 +52,7 @@ namespace MoqDemoPractice
 
                 if (propertyType == typeof(int))
                 {
-                    i.SetValue(instance, Int32.Parse(value));
+                    i.SetValue(instance, int.Parse(value));
                 }
                 else
                 {

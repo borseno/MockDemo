@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 
-namespace MoqDemoPractice
+namespace TxtFileDataAccess
 {
     public class TxtFileReader : ITxtFileReader
     {
