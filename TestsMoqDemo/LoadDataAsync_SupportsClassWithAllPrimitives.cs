@@ -19,10 +19,10 @@ namespace TestsMoqDemo
                     .Setup(reader => reader.ReadAllLinesAsync())
                     .Returns(GetSamplePrimitiveInstancesRowsAsync());
 
-                var accessor = mock.Create<TxtFileDataAccess>();
+                var accessor = mock.Create<TxtFileDataAccess<SampleClassWithAllPrimitives>>();
 
                 var expected = GetSampleClassWithAllPrimitivesInstances().ToList();
-                var actual = (await accessor.LoadDataAsync<SampleClassWithAllPrimitives>())
+                var actual = (await accessor.LoadDataAsync())
                     .ToList();
 
                 Assert.True(actual != null);

@@ -18,10 +18,10 @@ namespace TestsMoqDemo
                     .Setup(reader => reader.ReadAllLinesAsync())
                     .Returns(GetSampleRowsAsync());
 
-                var accessor = mock.Create<TxtFileDataAccess>();
+                var accessor = mock.Create<TxtFileDataAccess<User>>();
 
                 var expected = GetSampleUsers();
-                var actual = accessor.LoadDataAsync<User>().GetAwaiter().GetResult().ToList();
+                var actual = accessor.LoadDataAsync().GetAwaiter().GetResult().ToList();
 
                 Assert.True(actual != null);
                 Assert.Equal(expected.Count, actual.Count);

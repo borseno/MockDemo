@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 
 namespace MoqDemoPractice
 {
-    public class TxtFileDataAccess
+    public class TxtFileDataAccess<T>
     {
-        private ITxtFileReader _reader;
+        private readonly ITxtFileReader _reader;
 
         public TxtFileDataAccess(ITxtFileReader reader) => _reader = reader;
 
-        public async Task<ICollection<T>> LoadDataAsync<T>()
+        public async Task<ICollection<T>> LoadDataAsync()
         {
             var rows = await _reader.ReadAllLinesAsync();
 
-            return rows.Select(i => ReadRowAs<T>(i)).ToList();
+            return rows.Select(i => ReadRowAs(i)).ToList();
         }
 
-        private T ReadRowAs<T>(string row)
+        private T ReadRowAs(string row)
         {
             var type = typeof(T);
             var properties = type.GetProperties();

@@ -5,7 +5,7 @@ namespace MoqDemoPractice
 {
     public class TxtFileReader : ITxtFileReader
     {
-        private string _path;
+        private readonly string _path;
 
         public TxtFileReader(string path) => _path = path;
 

@@ -23,9 +23,9 @@ namespace TestsMoqDemo
                     .Setup(reader => reader.ReadAllLinesAsync())
                     .Returns(GetSampleRowsAsync());
 
-                var accessor = mock.Create<TxtFileDataAccess>();
+                var accessor = mock.Create<TxtFileDataAccess<MyIntStringClass>>();
 
-                await Assert.ThrowsAsync<InvalidOperationException>(() => accessor.LoadDataAsync<MyIntStringClass>());
+                await Assert.ThrowsAsync<InvalidOperationException>(() => accessor.LoadDataAsync());
             }
         }
     }
