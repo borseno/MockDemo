@@ -31,9 +31,10 @@ namespace TxtFileDataAccess
                 var name = i.Name;
                 var propertyType = i.PropertyType;
 
-                if (propertyType != typeof(int) && propertyType != typeof(string))
+                if (!Validate(propertyType))
                 {
-                    throw new NotSupportedException("types of properties other than string and int arent supported");
+                    throw new NotSupportedException
+                        ("only primitives, string and decimal are supported. Your type: " + propertyType);
                 }
 
                 var match = Regex.Match(row, $"{name}=[^;]*;");
@@ -50,17 +51,94 @@ namespace TxtFileDataAccess
 
                 var value = match.Value.AsSpan().Slice(name.Length + 1, valueLength);
 
-                if (propertyType == typeof(int))
-                {
-                    i.SetValue(instance, int.Parse(value));
-                }
-                else
-                {
-                    i.SetValue(instance, value.ToString());
-                }
+                var castedValue = ConvertToType(value, propertyType);
+                
+                i.SetValue(instance, castedValue);
             }
 
             return instance;
+        }
+
+        private object ConvertToType(ReadOnlySpan<char> value, Type propertyType)
+        {   
+            if (propertyType == typeof(int))
+            {
+                return Int32.Parse(value);
+            }
+            if (propertyType == typeof(short))
+            {
+                return Int16.Parse(value);
+            }
+            if (propertyType == typeof(byte))
+            {
+                return Byte.Parse(value);
+            }
+            if (propertyType == typeof(char))
+            {
+                if (value.Length == 1)
+                {
+                    return value[0];
+                }
+                else if (value.Length == 0)
+                {
+                    return default(char);
+                }
+                else
+                {
+                    throw new InvalidDataException
+                        ("Data has invalid format. Char value contained more than 1 character");
+                }
+            }
+            if (propertyType == typeof(sbyte))
+            {
+                return SByte.Parse(value);
+            }
+            if (propertyType == typeof(long))
+            {
+                return Int64.Parse(value);
+            }
+            if (propertyType == typeof(ushort))
+            {
+                return UInt16.Parse(value);
+            }
+            if (propertyType == typeof(uint))
+            {
+                return UInt32.Parse(value);
+            }
+            if (propertyType == typeof(ulong))
+            {
+                return UInt64.Parse(value);
+            }
+            if (propertyType == typeof(string))
+            {
+                return value.ToString();
+            }
+            if (propertyType == typeof(float))
+            {
+                return Single.Parse(value);
+            }
+            if (propertyType == typeof(double))
+            {
+                return Double.Parse(value);
+            }
+            if (propertyType == typeof(decimal))
+            {
+                return Decimal.Parse(value);
+            }
+            if (propertyType == typeof(bool))
+            {
+                return Boolean.Parse(value);
+            }
+
+            throw new NotSupportedException("Type is not supported. Type was: " + propertyType);
+        }
+
+        private static bool Validate(Type propertyType)
+        {
+            return 
+                propertyType.IsPrimitive || 
+                propertyType == typeof(decimal) ||
+                propertyType == typeof(string);
         }
     }
 }
