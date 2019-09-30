@@ -1,6 +1,5 @@
 ﻿using Autofac.Extras.Moq;
 using SharedModels;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -75,29 +74,6 @@ namespace TestsMoqDemo
             var rows = GetSampleRows();
 
             return Task.FromResult(rows);
-        }
-    }
-
-    public partial class LoadDataAsyncTests
-    {
-        private class ClassWithNonPrimitive
-        {
-            public ClassWithNonPrimitive Property { get; set; } 
-        }
-
-        [Fact]
-        public async Task LoadDataAsync_ShouldThrowNotSupportedException_IfClassContainsNonPrimitiveType()
-        {
-            using (var mock = AutoMock.GetLoose())
-            {
-                mock.Mock<ITxtFileReader>()
-                    .Setup(reader => reader.ReadAllLinesAsync())
-                    .Returns(GetSampleRowsAsync());
-
-                var accessor = mock.Create<TxtFileDataAccess<ClassWithNonPrimitive>>();
-
-                await Assert.ThrowsAsync<NotSupportedException>(() => accessor.LoadDataAsync());
-            }
         }
     }
 }
