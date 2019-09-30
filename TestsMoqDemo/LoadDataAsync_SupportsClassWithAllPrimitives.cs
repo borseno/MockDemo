@@ -90,6 +90,15 @@ namespace TestsMoqDemo
             {
                 new SampleClassWithAllPrimitives
                 {
+                    Value1 = 123,
+                    Value3 = 34343434343,
+                    Value4 = 34,
+                    Value5 = 4545.454f,
+                    Value8 = '\n',
+                    Value9 = 3443,
+                    Value10 = -127,
+                    Value11 = 34343,
+                    Value14 = 343434343,
                     Value13 = "Whatsup! 123",
                     Value12 = true,
                     Value2 = 34,
@@ -102,7 +111,8 @@ namespace TestsMoqDemo
                     Value12 = false,
                     Value2 = 12111,
                     Value6 = 45.0024634D,
-                    Value7 = 45.001453535M
+                    Value7 = 45.001453535M,
+                    Value8 = '\0'
                 }
             };
         }
