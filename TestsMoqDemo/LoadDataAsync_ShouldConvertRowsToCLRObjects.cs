@@ -1,8 +1,9 @@
 ﻿using Autofac.Extras.Moq;
-using MoqDemoPractice;
+using SharedModels;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TxtFileDataAccess;
 using Xunit;
 
 namespace TestsMoqDemo
@@ -60,7 +61,7 @@ namespace TestsMoqDemo
                 }
             };
         }
-        private string[] GetSampleRows()
+        private IEnumerable<string> GetSampleRows()
         {
             var users = GetSampleUsers();
 
@@ -68,7 +69,7 @@ namespace TestsMoqDemo
 
             return rows.ToArray();
         }
-        private Task<string[]> GetSampleRowsAsync()
+        private Task<IEnumerable<string>> GetSampleRowsAsync()
         {
             var rows = GetSampleRows();
 

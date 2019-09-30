@@ -1,9 +1,8 @@
 using Autofac.Extras.Moq;
-using MoqDemoPractice;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
+using TxtFileDataAccess;
 using Xunit;
 
 namespace TestsMoqDemo
@@ -108,12 +107,12 @@ namespace TestsMoqDemo
             };
         }
 
-        private string[] GetSamplePrimitiveInstancesRows() =>
+        private IEnumerable<string> GetSamplePrimitiveInstancesRows() =>
             GetSampleClassWithAllPrimitivesInstances()
             .Select(i => i.ToString())
             .ToArray();
 
-        private Task<string[]> GetSamplePrimitiveInstancesRowsAsync() => 
+        private Task<IEnumerable<string>> GetSamplePrimitiveInstancesRowsAsync() => 
             Task.FromResult(GetSamplePrimitiveInstancesRows());
     }
 }

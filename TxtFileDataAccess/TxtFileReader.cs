@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace MoqDemoPractice
@@ -9,7 +10,7 @@ namespace MoqDemoPractice
 
         public TxtFileReader(string path) => _path = path;
 
-        public Task<string[]> ReadAllLinesAsync()
-            => File.ReadAllLinesAsync(_path);
+        public async Task<IEnumerable<string>> ReadAllLinesAsync()
+            => await File.ReadAllLinesAsync(_path);
     }
 }
